@@ -122,7 +122,7 @@ const AboutPortfolio = () => {
               </span>
             </h1>
             <p className="text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
-              With 30,000+ square feet of operational cannabis facilities and successful retail launches across multiple states, we bring institutional expertise to Northern Virginia's emerging market. Our track record proves we deliver on our commitments—and our Lease Option model proves we put our money where our mouth is.
+              With 24,000+ square feet of operational cannabis facilities and successful retail launches across multiple states, we bring institutional expertise to Northern Virginia's emerging market. Our track record proves we deliver on our commitments—and our Lease Option model proves we put our money where our mouth is.
             </p>
           </div>
 
