@@ -83,12 +83,15 @@ const SynterraLandingPage = () => {
               <Leaf className="h-8 w-8 text-emerald-400" />
               <span className="text-2xl font-bold text-white">Synterra Group</span>
             </div>
-            <a
-              href="#contact"
-              className="bg-gradient-to-r from-emerald-600 to-emerald-500 text-white px-6 py-2 rounded-lg font-semibold hover:from-emerald-500 hover:to-emerald-400 transition-all duration-300 shadow-lg shadow-emerald-500/20"
-            >
-              Partner With Us
-            </a>
+            <div className="flex items-center space-x-6">
+              <a href="/about-portfolio" className="text-slate-300 hover:text-white transition-colors">About & Portfolio</a>
+              <a
+                href="#contact"
+                className="bg-gradient-to-r from-emerald-600 to-emerald-500 text-white px-6 py-2 rounded-lg font-semibold hover:from-emerald-500 hover:to-emerald-400 transition-all duration-300 shadow-lg shadow-emerald-500/20"
+              >
+                Partner With Us
+              </a>
+            </div>
           </div>
         </div>
       </nav>
