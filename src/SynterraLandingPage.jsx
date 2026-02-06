@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Building2, Shield, TrendingUp, CheckCircle2, Phone, Mail, MapPin, ChevronDown, Lock, Leaf, Award, Users } from 'lucide-react';
 
@@ -13,6 +13,11 @@ const SynterraLandingPage = () => {
   const [activeAccordion, setActiveAccordion] = useState(null);
 
   const [formStatus, setFormStatus] = useState('');
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,7 +67,7 @@ const SynterraLandingPage = () => {
   const faqs = [
     {
       question: "What makes the 1.5x market rate sustainable?",
-      answer: "Legal cannabis retail generates significantly higher revenue per square foot than traditional retail ($3,000-5,000/sq ft annually). This premium pricing reflects the specialized nature of the space, enhanced security requirements, and the competitive advantage of prime locations in emerging markets."
+      answer: "Legal cannabis retail generates significantly higher revenue per square foot than traditional retail. This premium pricing reflects the specialized nature of the space, enhanced security requirements, and the competitive advantage of prime locations in emerging markets."
     },
     {
       question: "What happens if licensing doesn't go through?",
@@ -119,12 +124,12 @@ const SynterraLandingPage = () => {
                 >
                   Schedule a Consultation
                 </a>
-                <a
-                  href="#value-proposition"
+                <Link
+                  to="/about-portfolio"
                   className="bg-slate-800 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-slate-700 transition-all duration-300 border border-slate-600 text-center"
                 >
                   Learn More
-                </a>
+                </Link>
               </div>
             </div>
             <div className="relative">

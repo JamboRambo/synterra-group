@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Building2, Users, TrendingUp, Shield, CheckCircle2, ArrowRight, Target, Award, Briefcase, Leaf, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -12,6 +12,11 @@ const AboutPortfolio = () => {
   const [formStatus, setFormStatus] = useState('');
   const [adelantoImageIndex, setAdelantoImageIndex] = useState(0);
   const [rochesterImageIndex, setRochesterImageIndex] = useState(0);
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // Adelanto images
   const adelantoImages = [
