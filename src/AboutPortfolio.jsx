@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Building2, Users, TrendingUp, Shield, CheckCircle2, ArrowRight, Target, Award, Briefcase, Leaf } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Building2, Users, TrendingUp, Shield, CheckCircle2, ArrowRight, Target, Award, Briefcase, Leaf, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const AboutPortfolio = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,41 @@ const AboutPortfolio = () => {
     message: ''
   });
   const [formStatus, setFormStatus] = useState('');
+  const [adelantoImageIndex, setAdelantoImageIndex] = useState(0);
+  const [rochesterImageIndex, setRochesterImageIndex] = useState(0);
+
+  // Adelanto images
+  const adelantoImages = [
+    { src: '/photos/Adelanto Grow Room.jpg', alt: 'Adelanto Cultivation Grow Room' },
+    { src: '/photos/Adelanto Flower Room 2.jpg', alt: 'Adelanto Flower Room' },
+    { src: '/photos/Adelanto Farm.jpg', alt: 'Adelanto Farm Exterior' },
+    { src: '/photos/Adelanto CO2 Tank.jpg', alt: 'Adelanto CO2 System' },
+    { src: '/photos/Adelanto Flower Room.jpg', alt: 'Adelanto Flower Room' },
+    { src: '/photos/Adelanto Flower Room 3.jpg', alt: 'Adelanto Flower Room 3' },
+    { src: '/photos/Adelanto Hallway.jpg', alt: 'Adelanto Facility Hallway' }
+  ];
+
+  // Rochester images
+  const rochesterImages = [
+    { src: '/photos/Cannabis Rochestor 1.png', alt: 'Cannabis Rochester Retail Location 1' },
+    { src: '/photos/Cannabis Rochestor 2.png', alt: 'Cannabis Rochester Retail Location 2' }
+  ];
+
+  const nextAdelantoImage = () => {
+    setAdelantoImageIndex((prev) => (prev + 1) % adelantoImages.length);
+  };
+
+  const prevAdelantoImage = () => {
+    setAdelantoImageIndex((prev) => (prev - 1 + adelantoImages.length) % adelantoImages.length);
+  };
+
+  const nextRochesterImage = () => {
+    setRochesterImageIndex((prev) => (prev + 1) % rochesterImages.length);
+  };
+
+  const prevRochesterImage = () => {
+    setRochesterImageIndex((prev) => (prev - 1 + rochesterImages.length) % rochesterImages.length);
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -55,14 +91,14 @@ const AboutPortfolio = () => {
       <nav className="fixed top-0 w-full bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <a href="/" className="flex items-center space-x-2">
-              <Leaf className="h-8 w-8 text-emerald-400" />
-              <span className="text-2xl font-bold text-white">Synterra Group</span>
-            </a>
-            <div className="flex items-center space-x-6">
-              <a href="/" className="text-slate-300 hover:text-white transition-colors">Home</a>
-              <a href="/about-portfolio" className="text-emerald-400 font-semibold">About & Portfolio</a>
-            </div>
+           <Link to="/" className="flex items-center space-x-2">
+  <Leaf className="h-8 w-8 text-emerald-400" />
+  <span className="text-2xl font-bold text-white">Synterra Group</span>
+</Link>
+<div className="flex items-center space-x-6">
+  <Link to="/" className="text-slate-300 hover:text-white transition-colors">Home</Link>
+  <Link to="/about-portfolio" className="text-emerald-400 font-semibold">About & Portfolio</Link>
+</div>
           </div>
         </div>
       </nav>
@@ -157,15 +193,44 @@ const AboutPortfolio = () => {
           {/* Project 1: Adelanto Cultivation Campus */}
           <div className="mb-16 bg-gradient-to-br from-slate-800/80 to-slate-900/80 rounded-2xl overflow-hidden border border-slate-700/50 shadow-2xl">
             <div className="grid lg:grid-cols-2 gap-0">
-              {/* Image Placeholder */}
-              <div className="relative h-96 lg:h-auto bg-gradient-to-br from-emerald-900/20 to-slate-900/40 flex items-center justify-center border-r border-slate-700/50">
-                <div className="text-center p-8">
-                  <Building2 className="h-24 w-24 text-emerald-400/30 mx-auto mb-4" />
-                  <p className="text-slate-500 text-sm">
-                    [Image Placeholder: Adelanto Cultivation Facility]
-                    <br />
-                    Replace with photo from desktop/synterragroup/photos
-                  </p>
+              {/* Image Carousel */}
+              <div className="relative h-96 lg:h-auto overflow-hidden border-r border-slate-700/50 group">
+                <img 
+                  src={adelantoImages[adelantoImageIndex].src}
+                  alt={adelantoImages[adelantoImageIndex].alt}
+                  className="w-full h-full object-cover transition-opacity duration-300"
+                />
+                
+                {/* Carousel Navigation */}
+                <button
+                  onClick={prevAdelantoImage}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-slate-900/80 hover:bg-slate-900 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </button>
+                <button
+                  onClick={nextAdelantoImage}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-slate-900/80 hover:bg-slate-900 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </button>
+                
+                {/* Dots Indicator */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+                  {adelantoImages.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setAdelantoImageIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        index === adelantoImageIndex 
+                          ? 'bg-emerald-400 w-6' 
+                          : 'bg-slate-500 hover:bg-slate-400'
+                      }`}
+                      aria-label={`Go to image ${index + 1}`}
+                    />
+                  ))}
                 </div>
               </div>
 
@@ -232,7 +297,7 @@ const AboutPortfolio = () => {
                 {/* Stats Grid */}
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   <div className="bg-slate-700/30 rounded-lg p-4 border border-slate-600/30">
-                    <div className="text-3xl font-bold text-emerald-400 mb-1">12,000</div>
+                    <div className="text-3xl font-bold text-emerald-400 mb-1">4,400</div>
                     <div className="text-sm text-slate-400">Sq. Ft. Premium Retail</div>
                   </div>
                   <div className="bg-slate-700/30 rounded-lg p-4 border border-slate-600/30">
@@ -264,15 +329,44 @@ const AboutPortfolio = () => {
                 </div>
               </div>
 
-              {/* Image Placeholder (Right Side) */}
-              <div className="relative h-96 lg:h-auto bg-gradient-to-br from-emerald-900/20 to-slate-900/40 flex items-center justify-center border-l border-slate-700/50 order-1 lg:order-2">
-                <div className="text-center p-8">
-                  <Award className="h-24 w-24 text-emerald-400/30 mx-auto mb-4" />
-                  <p className="text-slate-500 text-sm">
-                    [Image Placeholder: Rochester Retail Rendering]
-                    <br />
-                    Replace with photo from desktop/synterragroup/photos
-                  </p>
+              {/* Image Carousel (Right Side) */}
+              <div className="relative h-96 lg:h-auto overflow-hidden border-l border-slate-700/50 order-1 lg:order-2 group">
+                <img 
+                  src={rochesterImages[rochesterImageIndex].src}
+                  alt={rochesterImages[rochesterImageIndex].alt}
+                  className="w-full h-full object-cover transition-opacity duration-300"
+                />
+                
+                {/* Carousel Navigation */}
+                <button
+                  onClick={prevRochesterImage}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-slate-900/80 hover:bg-slate-900 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </button>
+                <button
+                  onClick={nextRochesterImage}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-slate-900/80 hover:bg-slate-900 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </button>
+                
+                {/* Dots Indicator */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+                  {rochesterImages.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setRochesterImageIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        index === rochesterImageIndex 
+                          ? 'bg-emerald-400 w-6' 
+                          : 'bg-slate-500 hover:bg-slate-400'
+                      }`}
+                      aria-label={`Go to image ${index + 1}`}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -393,7 +487,7 @@ const AboutPortfolio = () => {
       </section>
 
       {/* CTA Section - Let's Collaborate */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-800/50 to-slate-900">
+      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-800/50 to-slate-900">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-white mb-4">Discuss Your Property</h2>
