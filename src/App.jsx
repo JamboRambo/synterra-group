@@ -11,14 +11,43 @@ const SynterraLandingPage = () => {
   });
   const [activeAccordion, setActiveAccordion] = useState(null);
 
-  const handleSubmit = (e) => {
+  const [formStatus, setFormStatus] = useState('');
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Create mailto link with form data
-    const subject = encodeURIComponent('Property Partnership Inquiry - Synterra Group');
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nProperty Address: ${formData.propertyAddress}\n\nMessage:\n${formData.message}`
-    );
-    window.location.href = `mailto:hello@synterra.group?subject=${subject}&body=${body}`;
+    setFormStatus('sending');
+    
+    try {
+      const response = await fetch('https://formspree.io/f/xaqdwvyw', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          propertyAddress: formData.propertyAddress,
+          message: formData.message
+        })
+      });
+      
+      if (response.ok) {
+        setFormStatus('success');
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          propertyAddress: '',
+          message: ''
+        });
+        setTimeout(() => setFormStatus(''), 5000);
+      } else {
+        setFormStatus('error');
+      }
+    } catch (error) {
+      setFormStatus('error');
+    }
   };
 
   const handleChange = (e) => {
@@ -442,10 +471,23 @@ const SynterraLandingPage = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:from-emerald-500 hover:to-emerald-400 transition-all duration-300 shadow-xl shadow-emerald-500/30"
+                  disabled={formStatus === 'sending'}
+                  className="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:from-emerald-500 hover:to-emerald-400 transition-all duration-300 shadow-xl shadow-emerald-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Submit Inquiry
+                  {formStatus === 'sending' ? 'Sending...' : 'Submit Inquiry'}
                 </button>
+                
+                {formStatus === 'success' && (
+                  <div className="mt-4 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-emerald-400 text-center">
+                    ✓ Message sent successfully! We'll be in touch soon.
+                  </div>
+                )}
+                
+                {formStatus === 'error' && (
+                  <div className="mt-4 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-center">
+                    ✗ Something went wrong. Please try again or email us directly at hello@synterra.group
+                  </div>
+                )}
               </form>
             </div>
           </div>
